@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resolving 30-Day Usage Data Limitation in Power BI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .step {
+            margin-bottom: 20px;
+        }
+        .step h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resolving 30-Day Usage Data Limitation in Power BI</h1>
+    
+    <p>Power BI provides valuable insights into report usage through its built-in usage metrics. However, there's a significant limitation: the usage data is only available for the last 30 days. This can be problematic for organizations that need to track usage trends over longer periods for capacity planning, user adoption analysis, or compliance reporting.</p>
+    <p>If you have admin access, then you can adjust the setting. However, if you like me where I only have access to the 30 days data, then it's frustrating.</p>
+    
+    <p>In this blog post, I'll show you how to overcome this limitation by using Power Automate to regularly query the Power BI usage dataset and persist the data in a long-term storage solution.</p>
+    
+    <h2>The Problem: 30-Day Limitation</h2>
+    
+    <p>Power BI's usage metrics dashboard shows data for the most recent 30 days only. While this is sufficient for short-term monitoring, it falls short when you need:</p>
+    <ul>
+        <li>Historical usage trends over months or years</li>
+        <li>Capacity planning based on usage patterns</li>
+        <li>User adoption metrics for quarterly or annual reports</li>
+        <li>Compliance and audit requirements</li>
+    </ul>
+    
+    <h2>The Solution: Automated Data Collection</h2>
+    
+    <p>The solution involves creating an automated workflow that:</p>
+    <ol>
+        <li>Uses Power Automate to query the Power BI Admin API for usage data</li>
+        <li>Processes and transforms the data</li>
+        <li>Persists the data to a long-term storage solution (like Azure SQL Database, SharePoint, or Dataverse)</li>
+    </ol>
+    
+    <h2>Step-by-Step Implementation</h2>
+    
+    <div class="step">
+        <h3>Step 1: Check Workspace ID and Semantic Model GUID</h3>
+
+        <p>You can collect the workspace and dataset GUIDs from the semantic model URL. The URL path contains the workspace ID and dataset ID which is in format https://app.powerbi.com/onelake/details/<code>{workspaceId}</code>/dataset/<code>{datasetId}</code>.</p>
+        
+    </div>
+    
+    <div class="step">
+        <h3>Step 2: Set Up Power Automate Flow</h3>
+        <p>Create a new automated cloud flow in Power Automate that runs on a schedule (e.g., daily or weekly).</p>
+        
+        <h4>Trigger: Recurrence</h4>
+        <p>Set up a recurrence trigger to run the flow at regular intervals. For daily collection, set it to run once per day.</p>
+        <p>Subject to your repository, retrieve the last activity date the collection provides and put into variables {Year}, {Month}, {Date}</p>
+        <h4>Action: Run a query against a dataset</h4>
+        <p>Workspace : <code>{Workspace ID}</code></p>
+        <p>Dataset : <code>{Dataset ID}</code></p>
+        <p>Query Text: <code>EVALUATE FILTER({Table}, {Date_Column}>DATE({Year}, {Month}, {Date}))</code></p>
+        <p>Persist the result into your respository</p>
+        
+    </div>
+    
+    <div class="step">
+        <h3>Step 3: Process the Data</h3>
+        <p>Once you have the usage data, aggregate/transform each table individually. According to your objectives, decide what tables to collect, e.g. Views, Rank, Report...</p>
+        <ul>
+            <li>Report views and interactions</li>
+            <li>User activity</li>
+            <li>Data refresh patterns</li>
+            <li>Performance metrics</li>
+        </ul>
+        <p>You can choose to use Power Automate to perform the job but personally I don't like as it's not transformation friendly. I prefer to trigger transformation within the persistence layer below</p>
+    </div>
+    
+    <div class="step">
+        <h3>Step 4: Persist the Data</h3>
+        <p>Store the processed data in a persistent storage solution. Options include:</p>
+        
+        <h4>Azure SQL Database</h4>
+        <p>Use the SQL Server connector to insert data into a database table.</p>
+        <pre><code>INSERT INTO PowerBIUsage (Date, ReportId, UserId, ActionType, Duration)
+VALUES (@Date, @ReportId, @UserId, @ActionType, @Duration)</code></pre>
+        
+        <h4>SharePoint List</h4>
+        <p>Create a SharePoint list and use the SharePoint connector to add items.</p>
+        
+        <h4>Azure Table Storage or Blob Storage</h4>
+        <p>For large volumes of data, use Azure Storage services.</p>
+    </div>
+    
+    <div class="step">
+        <h3>Step 5: Handle Data Retention and Cleanup</h3>
+        <p>Implement logic to:</p>
+        <ul>
+            <li>Avoid duplicate entries</li>
+            <li>Manage data retention policies</li>
+            <li>Archive old data if necessary</li>
+        </ul>
+    </div>
+    
+    <h2>Considerations</h2>
+    
+    <h3>Permissions</h3>
+    <p>Ensure your Power Automate flow has the necessary permissions:</p>
+    <ul>
+        <li>Execute query on Power BI semantic model</li>
+        <li>Access to the target storage system</li>
+    </ul>
+    
+    <h3>API Limits</h3>
+    <p>Be aware of Power BI API rate limits and plan your data collection accordingly.</p>
+    
+    <h3>Data Volume</h3>
+    <p>Usage data can be substantial. Consider data compression and efficient storage strategies.</p>
+    
+    <h2>Conclusion</h2>
+    
+    <p>By implementing this automated solution, you can collect and store Power BI usage data beyond the 30-day limitation, enabling better long-term analysis and decision-making. The key is to set up a reliable, automated process that runs consistently without manual intervention.</p>
+    
+    <p>This approach not only solves the data limitation problem but also provides a foundation for more advanced analytics on Power BI adoption and usage patterns within your organization.</p>
+    
+    <p>If you implement this solution, I'd love to hear about your experience and any challenges you encountered in the comments below!</p>
+</body>
+</html>
