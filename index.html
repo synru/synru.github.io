@@ -6,56 +6,124 @@
 	<link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/styles.css">
 	<style>
-		.hero {
-			text-align: center;
-			padding: 4rem 2rem;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-			margin: -1rem -1rem 2rem -1rem;
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
 		}
-		.hero h1 {
-			font-size: 3rem;
-			margin-bottom: 0.5rem;
+		body {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+			padding: 1rem 1.5rem 1.5rem;
+			background: #0d1117;
+			color: #c9d1d9;
+			overflow: hidden;
 		}
-		.hero p {
-			font-size: 1.2rem;
-			opacity: 0.9;
-		}
-		.projects-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-			gap: 2rem;
-			margin: 2rem 0;
-		}
-		.project-card {
-			transition: transform 0.3s ease, box-shadow 0.3s ease;
-		}
-		.project-card:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-		}
-		.contact-section {
-			text-align: center;
-			padding: 3rem 2rem;
-			background-color: var(--color-canvas-subtle);
-			margin: 2rem -1rem -1rem -1rem;
+		nav {
+			padding: 1rem 0 0.5rem;
 		}
 		nav ul {
 			display: flex;
+			justify-content: center;
+			align-items: center;
 			list-style: none;
 			padding: 0;
 			margin: 0;
-		}
-		nav li {
-			margin-right: 2rem;
+			gap: 2rem;
 		}
 		nav a {
-			color: var(--color-fg-default);
+			color: #f0f6fc;
 			text-decoration: none;
-			font-weight: 500;
+			font-weight: 600;
+			font-size: 0.95rem;
 		}
 		nav a:hover {
-			color: var(--color-accent-fg);
+			color: #58a6ff;
+		}
+		.hero {
+			text-align: center;
+			padding: 2rem 1.5rem;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			border-radius: 18px;
+		}
+		.hero h1 {
+			font-size: 2.5rem;
+			margin-bottom: 0.5rem;
+		}
+		.hero p {
+			font-size: 1rem;
+			opacity: 0.95;
+			margin: 0.5rem 0 0;
+		}
+		main {
+			flex: 1 1 auto;
+			overflow: hidden;
+			display: grid;
+			grid-template-rows: auto 1fr auto;
+			gap: 1rem;
+		}
+		.projects-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(220px, 1fr));
+			gap: 1rem;
+			height: 100%;
+			padding: 0.5rem 0;
+			overflow: hidden;
+		}
+		.project-card {
+			transition: transform 0.25s ease, box-shadow 0.25s ease;
+			min-height: 100px;
+			padding: 1rem;
+		}
+		.project-card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 12px 22px rgba(0,0,0,0.25);
+		}
+		.project-card h3 {
+			font-size: 1.05rem;
+			margin-bottom: 0.5rem;
+		}
+		.project-card p {
+			font-size: 0.95rem;
+			margin: 0;
+		}
+		.contact-section {
+			text-align: center;
+			padding: 1rem 1.5rem;
+			background-color: #161b22;
+			border-radius: 18px;
+		}
+		.contact-section p {
+			margin: 0.65rem 0;
+		}
+		.contact-links {
+			display: flex;
+			justify-content: center;
+			gap: 1.5rem;
+			flex-wrap: wrap;
+		}
+		.contact-links a {
+			color: #58a6ff;
+		}
+		@media (max-width: 1000px) {
+			.projects-grid {
+				grid-template-columns: repeat(2, minmax(180px, 1fr));
+			}
+		}
+		@media (max-width: 700px) {
+			body {
+				padding: 1rem;
+			}
+			nav ul {
+				gap: 1rem;
+			}
+			.projects-grid {
+				grid-template-columns: 1fr;
+				height: auto;
+			}
 		}
 	</style>
 </head>
@@ -69,13 +137,14 @@
 		</ul>
 	</nav>
 
-	<section id="home" class="hero">
-		<h1>Synru</h1>
-		<p>Data Analyst & Power BI Developer</p>
-		<p>Creating insightful visualizations and solving data challenges</p>
-	</section>
+	<main>
+		<section id="home" class="hero">
+			<h1>Synru</h1>
+			<p>Data Analyst & Power BI Developer</p>
+			<p>Creating insightful visualizations and solving data challenges</p>
+		</section>
 
-	<section id="projects">
+		<section id="projects">
 		<h2 class="h2 mb-4">Featured Projects</h2>
 		<div class="projects-grid">
 			<div class="col-12 project-card color-bg-accent rounded anim-hover-grow mb-2">
@@ -131,16 +200,21 @@
 		</div>
 	</section>
 
-	<section id="contact" class="contact-section">
-		<h2 class="h2 mb-4">Get In Touch</h2>
-		<p>Interested in collaborating or have questions about my work?</p>
-		<p>
-			<a href="mailto:sunlung@gmail.com" class="btn btn-primary">Email Me</a>
-		</p>
-		<p class="color-fg-muted mt-3">
-			Email: sunlung@gmail.com
-		</p>
-	</section>
+		<section id="contact" class="contact-section">
+			<h2 class="h2 mb-4">Get In Touch</h2>
+			<p>Interested in collaborating or have questions about my work?</p>
+			<div class="contact-links">
+				<a href="mailto:sunlung@gmail.com" class="btn btn-primary">Email Me</a>
+				<a href="https://www.linkedin.com/in/sun-lung-li-64a62612/" target="_blank" rel="noreferrer">LinkedIn</a>
+			</div>
+			<p class="color-fg-muted mt-3">
+				Email: sunlung@gmail.com
+			</p>
+			<p class="color-fg-muted">
+				LinkedIn: sun-lung-li-64a62612
+			</p>
+		</section>
+	</main>
 </body>
 
 </html>
