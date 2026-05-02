@@ -5,76 +5,142 @@
 	<title>Synru Portfolio</title>
 	<link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/styles.css">
+	<style>
+		.hero {
+			text-align: center;
+			padding: 4rem 2rem;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			margin: -1rem -1rem 2rem -1rem;
+		}
+		.hero h1 {
+			font-size: 3rem;
+			margin-bottom: 0.5rem;
+		}
+		.hero p {
+			font-size: 1.2rem;
+			opacity: 0.9;
+		}
+		.projects-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 2rem;
+			margin: 2rem 0;
+		}
+		.project-card {
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+		.project-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+		}
+		.contact-section {
+			text-align: center;
+			padding: 3rem 2rem;
+			background-color: var(--color-canvas-subtle);
+			margin: 2rem -1rem -1rem -1rem;
+		}
+		nav ul {
+			display: flex;
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		nav li {
+			margin-right: 2rem;
+		}
+		nav a {
+			color: var(--color-fg-default);
+			text-decoration: none;
+			font-weight: 500;
+		}
+		nav a:hover {
+			color: var(--color-accent-fg);
+		}
+	</style>
 </head>
 
 <body data-color-mode="dark" data-dark-theme="dark" class="p-3">
 	<nav>
 		<ul>
-			<li><a href="/">Home</a></li>
+			<li><a href="#home">Home</a></li>
+			<li><a href="#projects">Projects</a></li>
+			<li><a href="#contact">Contact</a></li>
 		</ul>
 	</nav>
-	<div>
-		<div>
-			<h1>Hello I am Synru</h1>
-			<p>Please find some of my works here</p>
-			<div class="col-5 color-bg-accent rounded anim-hover-grow mb-2">
+
+	<section id="home" class="hero">
+		<h1>Synru</h1>
+		<p>Data Analyst & Power BI Developer</p>
+		<p>Creating insightful visualizations and solving data challenges</p>
+	</section>
+
+	<section id="projects">
+		<h2 class="h2 mb-4">Featured Projects</h2>
+		<div class="projects-grid">
+			<div class="col-12 project-card color-bg-accent rounded anim-hover-grow mb-2">
 				<a class="d-block color-shadow-medium px-3 pt-4 pb-6 position-relative rounded-1 overflow-hidden no-underline"
 					href="/spending/">
 					<div class="position-absolute top-0 left-0 py-1 width-full"></div>
-					<h3 class="color-fg-default">Household Spending</h3>
+					<h3 class="color-fg-default">Household Spending Dashboard</h3>
 					<p class="color-fg-muted">
-						Showing my household spending in dashboard
+						Interactive dashboard visualizing household spending patterns and trends
 					</p>
 				</a>
 			</div>
-			<div class="col-5 color-bg-accent rounded anim-hover-grow mb-2">
+			<div class="col-12 project-card color-bg-accent rounded anim-hover-grow mb-2">
 				<a class="d-block color-shadow-medium px-3 pt-4 pb-6 position-relative rounded-1 overflow-hidden no-underline"
 					href="/autotrader/">
 					<div class="position-absolute top-0 left-0 py-1 width-full"></div>
-					<h3 class="color-fg-default">Autotrader</h3>
+					<h3 class="color-fg-default">Autotrader Data Visualization</h3>
 					<p class="color-fg-muted">
-						Visualize Autotrader data for easier car hunt
+						Comprehensive visualization of Autotrader data to simplify car shopping decisions
 					</p>
 				</a>
 			</div>
-			<div class="col-5 color-bg-accent rounded anim-hover-grow mb-2">
+			<div class="col-12 project-card color-bg-accent rounded anim-hover-grow mb-2">
 				<a class="d-block color-shadow-medium px-3 pt-4 pb-6 position-relative rounded-1 overflow-hidden no-underline"
 					href="/daytime/">
 					<div class="position-absolute top-0 left-0 py-1 width-full"></div>
-					<h3 class="color-fg-default">Daylength of World Cities</h3>
+					<h3 class="color-fg-default">World Cities Daylength Comparison</h3>
 					<p class="color-fg-muted">
-						Comparison of daylength of top cities with map visual
+						Interactive map visualization comparing daylength across major world cities
 					</p>
 				</a>
 			</div>
-			<div class="col-5 color-bg-accent rounded anim-hover-grow mb-2">
+			<div class="col-12 project-card color-bg-accent rounded anim-hover-grow mb-2">
 				<a class="d-block color-shadow-medium px-3 pt-4 pb-6 position-relative rounded-1 overflow-hidden no-underline"
 					href="/deneb/">
 					<div class="position-absolute top-0 left-0 py-1 width-full"></div>
-					<h3 class="color-fg-default">Funny Visualization with Vega/Deneb</h3>
+					<h3 class="color-fg-default">Advanced Visualizations with Vega/Deneb</h3>
 					<p class="color-fg-muted">
-						Some pieces of works I made with Vega/Deneb
+						Creative and advanced data visualizations built using Vega and Deneb
 					</p>
 				</a>
 			</div>
-			<div class="col-5 color-bg-accent rounded anim-hover-grow mb-2">
+			<div class="col-12 project-card color-bg-accent rounded anim-hover-grow mb-2">
 				<a class="d-block color-shadow-medium px-3 pt-4 pb-6 position-relative rounded-1 overflow-hidden no-underline"
 					href="/power-platform/power-bi-usage-collection/">
 					<div class="position-absolute top-0 left-0 py-1 width-full"></div>
-					<h3 class="color-fg-default">Resolving 30-Day Usage Data Limitation in Power BI</h3>
+					<h3 class="color-fg-default">Power BI Usage Data Collection</h3>
 					<p class="color-fg-muted">
-						Blog post on overcoming Power BI's 30-day usage data limit using Power Automate
+						Technical guide: Overcoming Power BI's 30-day usage data limitation with Power Automate
 					</p>
 				</a>
 			</div>
-			</ul>
 		</div>
-	</div>
-	<footer>
-		<ul>
-			<li><a href="mailto:sunlung@gmail.com">sunlung@gmail.com</a></li>
-		</ul>
-	</footer>
+	</section>
+
+	<section id="contact" class="contact-section">
+		<h2 class="h2 mb-4">Get In Touch</h2>
+		<p>Interested in collaborating or have questions about my work?</p>
+		<p>
+			<a href="mailto:sunlung@gmail.com" class="btn btn-primary">Email Me</a>
+		</p>
+		<p class="color-fg-muted mt-3">
+			Email: sunlung@gmail.com
+		</p>
+	</section>
 </body>
 
 </html>
